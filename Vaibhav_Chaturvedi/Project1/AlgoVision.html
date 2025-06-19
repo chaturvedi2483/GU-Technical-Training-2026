@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sorting Visualizer</title>
-    <script src="https://cdn.tailwindcss.com"></script> 
-    
+     <script src="https://cdn.tailwindcss.com"></script> 
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-900 text-white flex flex-col items-center p-5">
 
@@ -14,15 +14,15 @@
     <div id="container" class="flex items-end justify-center gap-1 h-64 w-full max-w-4xl bg-gray-800 p-2 rounded-md"></div>
 
     <div class="mt-5 flex gap-3">
-        <button class="px-4 py-2 bg-blue-500 rounded-md" onclick="init()">Init</button>
-        <button class="px-4 py-2 bg-red-500 rounded-md" onclick="pause()">Pause</button>
-        <button class="px-4 py-2 bg-green-500 rounded-md" onclick="play('bubble')">Bubble Sort</button>
-        <button class="px-4 py-2 bg-yellow-500 rounded-md" onclick="play('selection')">Selection Sort</button>
-        <button class="px-4 py-2 bg-purple-500 rounded-md" onclick="play('insertion')">Insertion Sort</button>
-        <button class="px-4 py-2 bg-orange-500 rounded-md" onclick="play('merge')">Merge Sort</button>
-        <button class="px-4 py-2 bg-pink-500 rounded-md" onclick="play('quick')">Quick Sort</button>
-        
-        </button>
+        <select id="algorithm-select" class="px-4 py-2 bg-gray-700 text-white rounded-md">
+            <option value="bubble">Bubble Sort</option>
+            <option value="selection">Selection Sort</option>
+            <option value="insertion">Insertion Sort</option>
+            <option value="merge">Merge Sort</option>
+            <option value="quick">Quick Sort</option>
+        </select>
+        <button class="px-4 py-2 bg-green-500 rounded-md" onclick="sortArray()">Sort</button>
+        <button class="px-4 py-2 bg-green-500 rounded-md" onclick="pause()">pause</button>
     </div>
 
     <div class="flex items-center space-x-2">
@@ -50,7 +50,7 @@
     <script src="./script.js"></script>
 
 </body>
-</html> 
+</html>
 
 <!-- 
 <!DOCTYPE html>

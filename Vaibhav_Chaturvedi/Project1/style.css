@@ -76,11 +76,9 @@ button:hover {
     cursor: pointer;
 }
 
- */
+*/
 
-
- 
-body {
+ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #1e1e2f;
@@ -90,7 +88,7 @@ body {
 }
 h1 {
     font-size: 2.5rem;
-    margin: 20px 0;
+    margin: 20px;
     color: #f8b400;
 }
 #container {
@@ -98,10 +96,11 @@ h1 {
     justify-content: center;
     align-items: flex-end;
     height: 400px;
-    width: 90%;
+    width: 100%;
+    overflow: hidden;
     max-width: 800px;
     margin: auto;
-    background-color: violet;
+    background-color: white;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -109,6 +108,7 @@ h1 {
 .bar {
     width: 20px;
     margin: 2px;
+    max-width: 5px;
     background-color: #4caf50;
     transition: height 0.2s, background-color 0.2s;
 }
@@ -144,4 +144,4 @@ input[type="range"] {
 label {
     font-size: 1.2rem;
     margin-right: 5px;
-}  
+}

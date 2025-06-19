@@ -119,58 +119,58 @@
 //         return moves;
 //     }
 
-//     function mergeSort(arr) {
-//         const moves = [];
+    // function mergeSort(arr) {
+    //     const moves = [];
     
-//         function merge(left, mid, right) {
-//             let leftArr = arr.slice(left, mid + 1);
-//             let rightArr = arr.slice(mid + 1, right + 1);
+    //     function merge(left, mid, right) {
+    //         let leftArr = arr.slice(left, mid + 1);
+    //         let rightArr = arr.slice(mid + 1, right + 1);
     
-//             let i = 0, j = 0, k = left;
+    //         let i = 0, j = 0, k = left;
     
-//             while (i < leftArr.length && j < rightArr.length) {
-//                 moves.push({ indices: [left + i, mid + 1 + j], type: "compare" });
+    //         while (i < leftArr.length && j < rightArr.length) {
+    //             moves.push({ indices: [left + i, mid + 1 + j], type: "compare" });
 
-//                 if (leftArr[i] <= rightArr[j]) {
-//                     arr[k] = leftArr[i];
-//                     moves.push({ indices: [k], type: "overwrite", value: leftArr[i] });
-//                     i++;
-//                 } else {
-//                     arr[k] = rightArr[j];
-//                     moves.push({ indices: [k], type: "overwrite", value: rightArr[j] });
-//                     j++;
-//                 }
-//                 k++;
-//             }
+    //             if (leftArr[i] <= rightArr[j]) {
+    //                 arr[k] = leftArr[i];
+    //                 moves.push({ indices: [k], type: "overwrite", value: leftArr[i] });
+    //                 i++;
+    //             } else {
+    //                 arr[k] = rightArr[j];
+    //                 moves.push({ indices: [k], type: "overwrite", value: rightArr[j] });
+    //                 j++;
+    //             }
+    //             k++;
+    //         }
 
-//             while (i < leftArr.length) {
-//                 arr[k] = leftArr[i];
-//                 moves.push({ indices: [k], type: "overwrite", value: leftArr[i] });
-//                 i++;
-//                 k++;
-//             }
+    //         while (i < leftArr.length) {
+    //             arr[k] = leftArr[i];
+    //             moves.push({ indices: [k], type: "overwrite", value: leftArr[i] });
+    //             i++;
+    //             k++;
+    //         }
 
-//             while (j < rightArr.length) {
-//                 arr[k] = rightArr[j];
-//                 moves.push({ indices: [k], type: "overwrite", value: rightArr[j] });
-//                 j++;
-//                 k++;
-//             }
-//         }
+    //         while (j < rightArr.length) {
+    //             arr[k] = rightArr[j];
+    //             moves.push({ indices: [k], type: "overwrite", value: rightArr[j] });
+    //             j++;
+    //             k++;
+    //         }
+    //     }
 
-//         function mergeSortHelper(left, right) {
-//             if (left < right) {
-//                 const mid = Math.floor((left + right) / 2);
+    //     function mergeSortHelper(left, right) {
+    //         if (left < right) {
+    //             const mid = Math.floor((left + right) / 2);
 
-//                 mergeSortHelper(left, mid);
-//                 mergeSortHelper(mid + 1, right);
-//                 merge(left, mid, right);
-//             }
-//         }
+    //             mergeSortHelper(left, mid);
+    //             mergeSortHelper(mid + 1, right);
+    //             merge(left, mid, right);
+    //         }
+    //     }
 
-//         mergeSortHelper(0, arr.length - 1);
-//         return moves;
-//     }
+    //     mergeSortHelper(0, arr.length - 1);
+    //     return moves;
+    // }
 
 //     function quickSort(arr, low, high) {
 //         const moves = [];
@@ -224,10 +224,11 @@
 //     window.play = play;
 // });
 
-
+//default array size
 let n = 22;
 const array = [];
 const container = document.getElementById("container");
+//default speed
 let speed=50;
 let paused=false;
 init();
@@ -276,6 +277,11 @@ function init() {
     }
     showBars();
 }
+function sortArray() {
+    const algorithm = document.getElementById("algorithm-select").value;
+    play(algorithm);
+}
+
 function play(algorithm) {
     paused=false;
     const copy = [...array];
@@ -304,15 +310,19 @@ function Animate(moves) {
     }
 
     const move = moves.shift();
-    const [i, j] = move.indices;
+    const [i, j] = move.indices||[];
 
     if (move.type === "swap") {
         [array[i], array[j]] = [array[j], array[i]];
     }
+    else if(move.type==="overwrite"){
+        array[i]=move.value;
+    }
     playNote(200+array[i]*500);
+    if(j!==undefined){
     playNote(200+array[j]*500);
     
-    
+    }
     
     showBars(move);
     setTimeout(() => Animate(moves), 50);
@@ -372,31 +382,56 @@ function insertionSort(arr) {
 
 function mergeSort(arr) {
     const moves = [];
-    function merge(left, right) {
-        let result = [],
-            i = 0,
-            j = 0;
-        while (i < left.length && j < right.length) {
-            moves.push({ indices: [i, j], type: "comp" });
-            if (left[i] < right[j]) {
-                result.push(left[i++]);
+
+    function merge(left, mid, right) {
+        let leftArr = arr.slice(left, mid + 1);
+        let rightArr = arr.slice(mid + 1, right + 1);
+
+        let i = 0, j = 0, k = left;
+
+        while (i < leftArr.length && j < rightArr.length) {
+            moves.push({ indices: [left + i, mid + 1 + j], type: "compare" });
+
+            if (leftArr[i] <= rightArr[j]) {
+                arr[k] = leftArr[i];
+                moves.push({ indices: [k], type: "overwrite", value: leftArr[i] });
+                i++;
             } else {
-                result.push(right[j++]);
+                arr[k] = rightArr[j];
+                moves.push({ indices: [k], type: "overwrite", value: rightArr[j] });
+                j++;
             }
+            k++;
         }
-        return result.concat(left.slice(i)).concat(right.slice(j));
+
+        while (i < leftArr.length) {
+            arr[k] = leftArr[i];
+            moves.push({ indices: [k], type: "overwrite", value: leftArr[i] });
+            i++;
+            k++;
+        }
+
+        while (j < rightArr.length) {
+            arr[k] = rightArr[j];
+            moves.push({ indices: [k], type: "overwrite", value: rightArr[j] });
+            j++;
+            k++;
+        }
     }
 
-    function merge(arr) {
-        if (arr.length <= 1) return arr;
-        const mid = Math.floor(arr.length / 2);
-        return merge(merge(arr.slice(0, mid)), merge(arr.slice(mid)));
+    function mergeSortHelper(left, right) {
+        if (left < right) {
+            const mid = Math.floor((left + right) / 2);
+
+            mergeSortHelper(left, mid);
+            mergeSortHelper(mid + 1, right);
+            merge(left, mid, right);
+        }
     }
 
-    merge(arr);
+    mergeSortHelper(0, arr.length - 1);
     return moves;
 }
-
 // Quick Sort
 function quickSort(arr, low, high) {
     const moves = [];
@@ -410,7 +445,7 @@ function quickSort(arr, low, high) {
                 [arr[i], arr[j]] = [arr[j], arr[i]];
                 moves.push({ indices: [i, j], type: "swap" });
             }
-        }
+        }   
         [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
         moves.push({ indices: [i + 1, high], type: "swap" });
 
@@ -428,18 +463,18 @@ function showBars(move) {
         bar.style.height = array[i] + "px";
         bar.classList.add("bg-blue-500", "flex-1", "min-w-[5px]", "mx-0.5");
 
-        if (move && move.indices.includes(i)) {
+        if (move && move.indices && move.indices.includes(i)) {
             bar.classList.replace("bg-blue-500", move.type === "swap" ? "bg-green-500" : "bg-red-500");
         }
 
         container.appendChild(bar);
     }
 }
-//control for array size and speed
+//control for array size and speed:
 document.getElementById("arraySize").addEventListener("input", function () {
     n = parseInt(this.value);
     init();
 });
 document.getElementById("speed").addEventListener("input", function () {
     speed = parseInt(this.value);
-});
+}); 
