@@ -31,3 +31,4 @@ class Alternatinggrps{
                 System.out.println(ans);
     }
 } 
+//my friend umang kataria 
